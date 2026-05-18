@@ -1,0 +1,26 @@
+# Node / frontend
+/frontend/node_modules
+/frontend/.next
+/frontend/out
+/frontend/.env.local
+/node_modules
+
+# Java / backend
+/backend/.gradle
+/backend/build
+/backend/out
+/backend/.idea
+
+# IDE / system
+*.iml
+/.idea
+/.vscode
+.DS_Store
+
+# envs / logs / builds
+*.log
+*.env
+.env.local
+dist
+target
+*.jar
