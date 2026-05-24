@@ -11,5 +11,7 @@ public interface TodoService {
     Todo getById(Long id);
     List<Todo> list(Long folderId); // folderId nullable -> list all or filtered
     Todo update(Long id, UpdateTodoRequest req);
+    Todo assignToFolder(Long id, Long folderId);
+    Todo clearFolder(Long id);
     void delete(Long id);
 }
