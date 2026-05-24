@@ -17,7 +17,12 @@ export default function TodoForm({ initial, onSubmit, submitLabel = "Guardar" }:
             onSubmit={async (e) => {
                 e.preventDefault();
                 if (!title.trim()) return;
-                await onSubmit({ title: title.trim(), description: description.trim(), done });
+                await onSubmit({
+                    title: title.trim(),
+                    description: description.trim(),
+                    done,
+                    folderId: initial?.folderId,
+                });
                 setTitle("");
                 setDescription("");
                 setDone(false);

@@ -56,5 +56,11 @@ export const createTodo = async (payload: CreateTodoRequest) =>
 export const updateTodo = async (id: number, payload: UpdateTodoRequest) =>
     (await api.put(`/api/todos/${id}`, payload)).data;
 
+export const assignTodoToFolder = async (id: number, folderId: number) =>
+    (await api.put(`/api/todos/${id}/folder/${folderId}`)).data as TodoResponse;
+
+export const clearTodoFolder = async (id: number) =>
+    (await api.delete(`/api/todos/${id}/folder`)).data as TodoResponse;
+
 export const deleteTodo = async (id: number) =>
     (await api.delete(`/api/todos/${id}`)).status;

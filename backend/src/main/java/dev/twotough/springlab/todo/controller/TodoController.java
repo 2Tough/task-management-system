@@ -65,6 +65,18 @@ public class TodoController {
         return ResponseEntity.ok(todoMapper.toResponse(updated));
     }
 
+    @PutMapping("/{id}/folder/{folderId}")
+    public ResponseEntity<TodoResponse> assignToFolder(@PathVariable Long id, @PathVariable Long folderId) {
+        Todo updated = todoService.assignToFolder(id, folderId);
+        return ResponseEntity.ok(todoMapper.toResponse(updated));
+    }
+
+    @DeleteMapping("/{id}/folder")
+    public ResponseEntity<TodoResponse> clearFolder(@PathVariable Long id) {
+        Todo updated = todoService.clearFolder(id);
+        return ResponseEntity.ok(todoMapper.toResponse(updated));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         todoService.delete(id);

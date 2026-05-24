@@ -2,6 +2,7 @@ package dev.twotough.springlab.todo.service;
 
 import dev.twotough.springlab.todo.dto.CreateTodoRequest;
 import dev.twotough.springlab.todo.dto.UpdateTodoRequest;
+import dev.twotough.springlab.todo.model.Folder;
 import dev.twotough.springlab.todo.model.Todo;
 import dev.twotough.springlab.todo.repository.FolderRepository;
 import dev.twotough.springlab.todo.repository.TodoRepository;
@@ -80,6 +81,40 @@ public class TodoServiceImpl implements TodoService {
         }
 
         // if req.getFolderId() is null -> keep existing folder
+        return repo.save(todo);
+    }
+
+    @Override
+    public Todo assignToFolder(Long id, Long folderId) {
+        Todo todo = repo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Todo not found: " + id));
+        Folder folder = folderRepository.findById(folderId)
+                .orElseThrow(() -> new IllegalArgumentException("folderId not found: " + folderId));
+
+        Folder currentFolder = todo.getFolder();
+        if (currentFolder != null) {
+            if (currentFolder.getId().equals(folderId)) {
+                return todo;
+            }
+            currentFolder.removeTodo(todo);
+        }
+
+        folder.addTodo(todo);
+        return repo.save(todo);
+    }
+
+    @Override
+    public Todo clearFolder(Long id) {
+        Todo todo = repo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Todo not found: " + id));
+
+        Folder currentFolder = todo.getFolder();
+        if (currentFolder != null) {
+            currentFolder.removeTodo(todo);
+        } else {
+            todo.setFolder(null);
+        }
+
         return repo.save(todo);
     }
 
